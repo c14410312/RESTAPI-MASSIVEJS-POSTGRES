@@ -40,12 +40,23 @@ massive(connectionInfo)
 	});
 
 	//get all products in ascending order of price
-	app.get('/products', (req, res) => {
-		req.app.get('db').query(
-			"SELECT title, price FROM products ORDER BY price ASC").then( items => {
-			console.log(res.json(items));
-			});
-	});
+        app.get('/products', (req, res) => {
+
+                if(req.query.name){
+
+                        const prodName = req.query.name;
+                        req.app.get('db').query(
+                                "SELECT title, price FROM products WHERE title='"+ prodName +"'").then( items => {
+                                        console.log(res.json(items));
+                                });
+                }else{
+                        req.app.get('db').query(
+                                "SELECT title, price FROM products ORDER BY price ASC").then( items => {
+                                        console.log(res.json(items));
+                                });
+                }
+        });
+
 
 
 	//get info of product specified by id
