@@ -13,7 +13,7 @@ const connectionInfo = {
 };
 
 
-massive(connectionInfo, enhancedFunctions: true)
+massive(connectionInfo)
 .then(instance => {
 	app.set('db', instance);
 
@@ -46,7 +46,7 @@ massive(connectionInfo, enhancedFunctions: true)
 
                         const prodName = req.query.name;
                         req.app.get('db').query(
-                                "SELECT title, price FROM products WHERE title LIKE $1", prodName).then( items => {
+                                "SELECT get_product_by_name($1)", prodName).then( items => {
                                         console.log(res.json(items));
                                 });
                 }else{
